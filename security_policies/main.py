@@ -1,10 +1,10 @@
 import count_rules
-import list_all_policies
+import security_policies
 
 
 def main():
 
-    all_policies = list_all_policies.get_all_policies()
+    all_policies = security_policies.get_all_policies()
 
     # rules_count = count_rules.count_policy_rules(
     #     '/Users/ukatsir/projects/cloud-armor/supporting_files/all_policies.json')

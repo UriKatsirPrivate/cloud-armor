@@ -17,10 +17,8 @@ def get_all_policies():
     policies = security_policy_service.securityPolicies().list(
         project='uri-test').execute()
 
-    ff = json.dumps(policies)
+    all_policies = json.dumps(policies)
 
-    id = policies['items'][0]['id']
+    # id = policies['items'][0]['id']
 
-    return ff
-
-    ddd = ""
+    return all_policies

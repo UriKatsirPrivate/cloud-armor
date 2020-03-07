@@ -26,4 +26,3 @@ def count_policy_rules(source_file):
     except IndexError:
         print("Oops!  That was no valid value.  Try again...")
     return total_rule_count
-    cc = ""
