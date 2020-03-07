@@ -3,7 +3,7 @@ from googleapiclient.discovery import build
 import json
 
 flow = InstalledAppFlow.from_client_secrets_file(
-    'client_secret_960394617171.json',
+    'supporting_files/client_secret_960394617171.json',
     scopes=['https://www.googleapis.com/auth/cloud-platform'])
 
 credentials = flow.run_local_server()
