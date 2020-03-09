@@ -2,10 +2,13 @@ import count_rules
 import security_policies
 
 PROJECT_NAME = 'uri-test'
-POLICY_NAME = 'armor-policy2'
+POLICY_NAME = 'armor-policy1'
 
 
 def main():
+
+    rules_work = security_policies.patch_one_rule(
+        PROJECT_NAME, POLICY_NAME, 66)
 
     all_policies = security_policies.get_all_policies(PROJECT_NAME)
 

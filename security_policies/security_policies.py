@@ -1,6 +1,7 @@
 from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
 import json
+import sys
 
 flow = InstalledAppFlow.from_client_secrets_file(
     'supporting_files/client_secret_960394617171.json',
@@ -10,6 +11,20 @@ credentials = flow.run_local_server()
 # credentials = flow.run_console()
 
 security_policy_service = build('compute', 'v1', credentials=credentials)
+
+
+class Rule_Data:
+    def __init__(self, kind, priority, action, preview, match):
+        self.kind = kind
+        self.priority = priority
+        self.action = action
+        self.preview = preview
+        self.match = {}
+
+
+class Test(object):
+    def __init__(self, data):
+        self.__dict__ = json.loads(data)
 
 
 def get_all_policies(project_name):
@@ -32,3 +47,43 @@ def get_one_policy(project_name, policy_name):
 
     name = policies['name']
     return one_policy
+
+
+def patch_one_rule(project_name, policy_name, rule_priority):
+
+    patched_rule = Rule_Data(
+        "compute#securityPolicyRule", 66, "allow", "false", "")
+
+    # data = '{"priority":66,"match":{"config":{"srcIpRanges":["10.0.2.0/24","10.1.1.0/24","10.3.3.0/24","10.48.2.0/24"]},"versionedExpr":"SRC_IPS_V1"}}'
+    # data = '{"priority":66,"match":{"config":{"srcIpRanges":["10.0.2.0/24","10.1.1.0/24","10.3.3.0/24","10.57.2.0/24"]},"versionedExpr":"SRC_IPS_V1"},"action":"allow","kind":"compute#securityPolicyRule","preview":false}'
+
+    try:
+        patched_rule = security_policy_service.securityPolicies().patchRule(
+            project=project_name, securityPolicy=policy_name, body={
+                'kind': 'compute#securityPolicyRule',
+                'priority': 66,
+                'action': 'allow',
+                'preview': False,
+                'match': {
+                    'config': {
+                        'srcIpRanges': [
+                            '192.0.2.0/24',
+                            '198.51.100.0/24',
+                            '203.0.113.0/24'
+                        ]
+                    },
+                    'versionedExpr': 'SRC_IPS_V1'
+                }
+            }, priority=rule_priority).execute()
+
+    except Exception as e:
+        print "Unexpected error:", e
+    except NameError as err:
+        print "Unexpected error:", err
+    except TypeError as err1:
+        print "Unexpected error:", err1
+    # except HttpError as err2:
+    #     print "Unexpected error:", err2
+    except:
+        print "Unexpected error:", sys.exc_info()[0]
+    hello = ''
