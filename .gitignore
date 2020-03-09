@@ -128,3 +128,5 @@ dmypy.json
 *client_secret*
 .vscode/settings.json
 .DS_Store
+supporting_files/one_policy.json
+/supporting_files/

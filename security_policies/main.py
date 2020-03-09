@@ -23,4 +23,8 @@ def main():
     fff = rules_count
 
 
-main()
+# main()
+
+# Main function calling 
+if __name__=="__main__":       
+    main() 
