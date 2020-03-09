@@ -5,6 +5,7 @@
 
 # [([1, 2, 3], 1), ([2, 3, 4], 2), ([3, 4, 5], 3)]
 import json
+import operator
 
 from jsonpath_ng import jsonpath, parse
 
@@ -29,26 +30,32 @@ for rule in match:
     # print (rule.value['preview'])
     action = str((rule.value['action']))
     preview = str((rule.value['preview']))
+    number_of_ips = len(rule.value['match']['config']['srcIpRanges'])
 
     if action == 'allow' and preview == 'True':
-        allow_preview_list.append(rule)
+        allow_preview_list.append(rule.value)
+        current_rule_index = len(allow_preview_list)
+        allow_preview_list[(current_rule_index-1)
+                           ]['number_of_ips'] = number_of_ips
     elif action == 'allow' and preview == 'False':
-        allow_no_preview_list.append(rule)
+        allow_no_preview_list.append(rule.value)
+        current_rule_index = len(allow_no_preview_list)
+        allow_no_preview_list[(current_rule_index-1)
+                              ]['number_of_ips'] = number_of_ips
     elif 'deny' in action and preview == 'True':
-        deny_preview_list.append(rule)
+        deny_preview_list.append(rule.value)
+        current_rule_index = len(deny_preview_list)
+        deny_preview_list[(current_rule_index-1)
+                          ]['number_of_ips'] = number_of_ips
+
     elif 'deny' in action and preview == 'False':
-        deny_no_preview_list.append(rule)
-
-# print allow_preview_list
-# print allow_no_preview_list
-# print deny_no_preview_list
-# print allow_no_preview_list
-
-for rule1 in deny_no_preview_list:
-    print(rule1.value)
+        deny_no_preview_list.append(rule.value)
+        current_rule_index = len(deny_no_preview_list)
+        deny_no_preview_list[(current_rule_index-1)
+                             ]['number_of_ips'] = number_of_ips
 
 
+# sorted_allow_no_preview_list = sorted(
+#     allow_no_preview_list, key='number_of_ips')
 
-
-
-stop_here=''
+stop_here = ''
