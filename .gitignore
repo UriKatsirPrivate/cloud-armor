@@ -127,3 +127,4 @@ dmypy.json
 # secret files
 *client_secret*
 .vscode/settings.json
+.DS_Store
