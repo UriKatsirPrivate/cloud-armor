@@ -4,8 +4,6 @@ from jsonpath_ng import jsonpath, parse
 
 def count_policy_rules(source_file):
 
-    # with open('/Users/ukatsir/projects/cloud-armor/supporting_files/all_policies.json') as f:
-    # with open(source_file) as f:
     json_data = json.loads(source_file)
 
     try:
