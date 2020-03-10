@@ -20,9 +20,10 @@ def create_lists():
     deny_preview_list = []
     deny_no_preview_list = []
 
-    # with open('/Users/ukatsir/projects/cloud-armor/supporting_files/one_ip_odd.json') as f:
     # with open('/Users/ukatsir/projects/cloud-armor/supporting_files/one_policy_scattered_odd.json') as f:
     with open('/Users/ukatsir/projects/cloud-armor/supporting_files/one_policy_scattered_even.json') as f:
+        # with open('/Users/ukatsir/projects/cloud-armor/supporting_files/one_ip_even.json') as f:
+        # with open('/Users/ukatsir/projects/cloud-armor/supporting_files/one_ip_odd.json') as f:
         json_data = json.load(f)
 
     # rules = json.dumps(json_data).find('rules')
