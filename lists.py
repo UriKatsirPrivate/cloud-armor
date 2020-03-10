@@ -1,16 +1,12 @@
 import json
-import operator
 
-# from jsonpath_ng import jsonpath, parse
-from jsonpath_ng import jsonpath
-from jsonpath_ng.ext import parse
+from jsonpath_ng import jsonpath, parse
 
 MAX_NUMBER_IPS_PER_RULE = 5
 
 
 def create_lists():
 
-    # listoflists = []
     allow_preview_list = []
     allow_no_preview_list = []
     deny_preview_list = []
@@ -62,10 +58,10 @@ def create_lists():
                                  ]['number_of_ips'] = number_of_ips
 
     stop_here = ''
-    combine_rules(allow_no_preview_list, 1)
+    combine_rules(allow_no_preview_list)
 
 
-def combine_rules(input_list, number_of_ips_to_match):
+def combine_rules(input_list):
     # json_list = json.dumps(input_list)
     # print (json_list)
     patch_allow_preview_list = []
