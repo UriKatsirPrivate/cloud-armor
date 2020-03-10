@@ -1,15 +1,11 @@
-# [
-# (lengtha,[ipi,..,ipk],[desci,..,desck],priority,preview,allow/deny),
-# (lengthb,[ipl,..,ipm],[descl,..,descm],priority,preview,allow/deny)
-# ]
-
-# [([1, 2, 3], 1), ([2, 3, 4], 2), ([3, 4, 5], 3)]
 import json
 import operator
 
 # from jsonpath_ng import jsonpath, parse
 from jsonpath_ng import jsonpath
 from jsonpath_ng.ext import parse
+
+MAX_NUMBER_IPS_PER_RULE = 5
 
 
 def create_lists():
@@ -21,8 +17,8 @@ def create_lists():
     deny_no_preview_list = []
 
     # with open('/Users/ukatsir/projects/cloud-armor/supporting_files/one_policy_scattered_odd.json') as f:
-    with open('/Users/ukatsir/projects/cloud-armor/supporting_files/one_policy_scattered_even.json') as f:
-        # with open('/Users/ukatsir/projects/cloud-armor/supporting_files/one_ip_even.json') as f:
+    # with open('/Users/ukatsir/projects/cloud-armor/supporting_files/one_policy_scattered_even.json') as f:
+    with open('/Users/ukatsir/projects/cloud-armor/supporting_files/one_ip_even.json') as f:
         # with open('/Users/ukatsir/projects/cloud-armor/supporting_files/one_ip_odd.json') as f:
         json_data = json.load(f)
 
@@ -65,9 +61,6 @@ def create_lists():
             deny_no_preview_list[(current_rule_index-1)
                                  ]['number_of_ips'] = number_of_ips
 
-    # sorted_allow_no_preview_list = sorted(
-    #     allow_no_preview_list, key='number_of_ips')
-
     stop_here = ''
     combine_rules(allow_no_preview_list, 1)
 
@@ -93,7 +86,7 @@ def combine_rules(input_list, number_of_ips_to_match):
                 rule_priority_j = input_list[j+1]['priority']
                 processed_j = input_list[j+1]['processed']
                 # Found a match of an unprocessed rule
-                if ((number_of_ips_j <= (5-number_of_ips_i)) and processed_j == 'false'):
+                if ((number_of_ips_j <= (MAX_NUMBER_IPS_PER_RULE-number_of_ips_i)) and processed_j == 'false'):
                     patch_allow_preview_list.append(
                         [rule_priority_i, rule_priority_j])
                     # add the higher rule number to the discard list
@@ -108,7 +101,6 @@ def combine_rules(input_list, number_of_ips_to_match):
                     break
                 j = j+1
 
-        # if applicable, update discard value to true
         # update processed value to true
         input_list[i]['processed'] = 'true'
 
