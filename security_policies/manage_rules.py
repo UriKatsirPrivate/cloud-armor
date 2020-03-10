@@ -32,13 +32,14 @@ def create_lists(one_policy):
         action = str((rule.value['action']))
         preview = str((rule.value['preview']))
         number_of_ips = len(rule.value['match']['config']['srcIpRanges'])
+        ips = str(rule.value['match']['config']['srcIpRanges'])
 
         if action == 'allow' and preview == 'True':
             allow_preview_list.append(rule.value)
             current_rule_index = len(allow_preview_list)
             allow_preview_list[(current_rule_index-1)
                                ]['number_of_ips'] = number_of_ips
-        elif action == 'allow' and preview == 'False':
+        elif action == 'allow' and preview == 'False' and '*' not in ips:
             allow_no_preview_list.append(rule.value)
             current_rule_index = len(allow_no_preview_list)
             allow_no_preview_list[(current_rule_index-1)
@@ -104,6 +105,6 @@ def combine_rules(input_list):
 
         i = i+1
     # stop_here = ''
-    return patch_allow_preview_list,discard_allow_preview_list
+    return patch_allow_preview_list, discard_allow_preview_list
 
 # create_lists()
