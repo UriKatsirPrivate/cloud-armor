@@ -77,17 +77,19 @@ def combine_rules(input_list, number_of_ips_to_match):
     i = 0
     while i < len(input_list):
         discard = input_list[i]['discard']
-        processed = input_list[i]['processed']
+        processed_i = input_list[i]['processed']
         number_of_ips_i = input_list[i]['number_of_ips']
         rule_priority_i = input_list[i]['priority']
 
-        if processed == 'false':  # skip processed and discarded rules
+        if processed_i == 'false':  # skip processed and discarded rules
             # find match
             j = i
             while j < (len(input_list)-i):  # run on the rest of the list starting at position i
                 number_of_ips_j = input_list[j+1]['number_of_ips']
                 rule_priority_j = input_list[j+1]['priority']
-                if number_of_ips_j <= (5-number_of_ips_i):  # Found a match
+                processed_j = input_list[j+1]['processed']
+                # Found a match of an unprocessed rule
+                if ((number_of_ips_j <= (5-number_of_ips_i)) and processed_j == 'false'):
                     patch_allow_preview_list.append(
                         [rule_priority_i, rule_priority_j])
                     # add the higher rule number to the discard list
