@@ -24,6 +24,7 @@ def get_all_policies(project_name):
 
     return all_policies
 
+
 def get_one_policy(project_name, policy_name):
     policies = security_policy_service.securityPolicies().get(
         project=project_name, securityPolicy=policy_name).execute()
@@ -33,26 +34,70 @@ def get_one_policy(project_name, policy_name):
     name = policies['name']
     return one_policy
 
-def patch_one_rule(project_name, policy_name, rule_priority):
 
+def get_one_rule(project_name, policy_name, rule_priority):
+    rule = security_policy_service.securityPolicies().getRule(
+        project=project_name, securityPolicy=policy_name, priority=rule_priority).execute()
+
+    return rule
+
+
+def patch_one_rule_new(project_name, policy_name, rule_priority, body, rule0, rule1):
+    # print body
+    # str(rule0['match']['config']['srcIpRanges']).replace(']', ',', 1).replace('u', '')
     try:
         patched_rule = security_policy_service.securityPolicies().patchRule(
             project=project_name, securityPolicy=policy_name, body={
                 'kind': 'compute#securityPolicyRule',
-                'priority': 55,
+                'priority': str(rule0['priority']),
                 'action': 'allow',
                 'preview': False,
                 'match': {
                     'config': {
                         'srcIpRanges': [
-                            '192.30.2.0/24',
-                            '198.20.100.0/24',
-                            '10.1.113.0/24'
+                            '10.23.3.0/24',
+                            '10.25.36.0/24',
+                            str(rule0['match']['config']['srcIpRanges']).replace(
+                                ']', '', 1).replace('u', '').replace('[', '', 1).replace("'","")
                         ]
                     },
                     'versionedExpr': 'SRC_IPS_V1'
                 }
             }, priority=rule_priority).execute()
+
+    except Exception as e:
+        print "Unexpected error:", e
+    # except NameError as err:
+    #     print "Unexpected error:", err
+    # except TypeError as err1:
+    #     print "Unexpected error:", err1
+    except:
+        print "Unexpected error:", sys.exc_info()[0]
+    hello = ''
+
+
+def patch_one_rule(project_name, policy_name, rule_priority):
+
+    try:
+        patched_rule = security_policy_service.securityPolicies().patchRule(
+            project=project_name, securityPolicy=policy_name, body={'kind': 'compute#securityPolicyRule',
+                                                                    'priority': 55,
+                                                                    'action': 'allow',
+                                                                    'preview': False,
+                                                                    'match': {
+                                                                        'config': {
+                                                                            'srcIpRanges': [
+                                                                                '194.30.2.0/24',
+                                                                                '195.20.100.0/24',
+                                                                                '10.1.115.0/24',
+                                                                                '10.2.3.0/24',
+                                                                                '10.23.36.0/24'
+                                                                            ]
+
+                                                                        },
+                                                                        'versionedExpr': 'SRC_IPS_V1'
+                                                                    }
+                                                                    }, priority=rule_priority).execute()
 
     except Exception as e:
         print "Unexpected error:", e

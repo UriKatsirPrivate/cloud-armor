@@ -2,6 +2,9 @@ import json
 
 from jsonpath_ng import jsonpath, parse
 
+import security_policies
+
+
 MAX_NUMBER_IPS_PER_RULE = 5
 
 
@@ -107,4 +110,40 @@ def combine_rules(input_list):
     # stop_here = ''
     return patch_allow_preview_list, discard_allow_preview_list
 
-# create_lists()
+
+def patch_rules(list_rules_to_patch, project_name, policy_name):
+
+    # get each rule's details
+    for rule in list_rules_to_patch:
+        rule_0 = security_policies.get_one_rule(
+            project_name, policy_name, rule[0])
+        rule_1 = security_policies.get_one_rule(
+            project_name, policy_name, rule[1])
+
+        stop_here1 = ''
+    # create body object
+    # body = create_body_object(rule_0, rule_1)
+    # send body object to patch_one_rule() function
+    security_policies.patch_one_rule_new(
+        'uri-test', 'armor-policy1', rule_0['priority'], '',rule_0,rule_1)
+
+    stop_here = ''
+
+
+def create_body_object(rule0, rule1):
+    body = "{'kind': 'compute#securityPolicyRule','priority':" + str(rule0['priority']) + ",'action': 'allow','preview': False,'match': \
+            {'config': \
+                {'srcIpRanges':"
+    body += str(rule0['match']['config']['srcIpRanges']
+                ).replace(']', ',', 1).replace('u', '')
+
+    body += str(rule1['match']['config']['srcIpRanges']
+                ).replace('[', '', 1).replace('u', '')
+
+    body += "},'versionedExpr': 'SRC_IPS_V1'}}"
+
+    # print str(body)
+
+    return body
+
+    stop3 = ''

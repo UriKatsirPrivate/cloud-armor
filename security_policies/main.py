@@ -3,7 +3,7 @@ import security_policies
 import manage_rules
 
 PROJECT_NAME = 'uri-test'
-POLICY_NAME = 'armor-policy2'
+POLICY_NAME = 'armor-policy1'
 
 
 def main():
@@ -25,8 +25,10 @@ def main():
 
     rules = manage_rules.combine_rules(allow_no_preview_list)
 
-    rules_to_patch= rules[0]
+    rules_to_patch = rules[0]
     rules_to_discard = rules[1]
+
+    manage_rules.patch_rules(rules_to_patch, PROJECT_NAME, POLICY_NAME)
 
     fff = ''
 
