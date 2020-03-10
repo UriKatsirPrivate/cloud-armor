@@ -20,7 +20,9 @@ def create_lists():
     deny_preview_list = []
     deny_no_preview_list = []
 
-    with open('/Users/ukatsir/projects/cloud-armor/supporting_files/one_policy.json') as f:
+    # with open('/Users/ukatsir/projects/cloud-armor/supporting_files/one_ip_odd.json') as f:
+    # with open('/Users/ukatsir/projects/cloud-armor/supporting_files/one_policy_scattered_odd.json') as f:
+    with open('/Users/ukatsir/projects/cloud-armor/supporting_files/one_policy_scattered_even.json') as f:
         json_data = json.load(f)
 
     # rules = json.dumps(json_data).find('rules')
@@ -84,7 +86,8 @@ def combine_rules(input_list, number_of_ips_to_match):
         if processed_i == 'false':  # skip processed and discarded rules
             # find match
             j = i
-            while j < (len(input_list)-i):  # run on the rest of the list starting at position i
+            # run on the rest of the list starting at position i
+            while j < (len(input_list)-1):
                 number_of_ips_j = input_list[j+1]['number_of_ips']
                 rule_priority_j = input_list[j+1]['priority']
                 processed_j = input_list[j+1]['processed']
