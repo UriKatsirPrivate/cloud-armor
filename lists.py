@@ -7,12 +7,14 @@
 import json
 import operator
 
-from jsonpath_ng import jsonpath, parse
+# from jsonpath_ng import jsonpath, parse
+from jsonpath_ng import jsonpath
+from jsonpath_ng.ext import parse
 
 
 def create_lists():
 
-    listoflists = []
+    # listoflists = []
     allow_preview_list = []
     allow_no_preview_list = []
     deny_preview_list = []
@@ -45,6 +47,9 @@ def create_lists():
             current_rule_index = len(allow_no_preview_list)
             allow_no_preview_list[(current_rule_index-1)
                                   ]['number_of_ips'] = number_of_ips
+            allow_no_preview_list[(current_rule_index-1)
+                                  ]['processed'] = 'false'
+            allow_no_preview_list[(current_rule_index-1)]['discard'] = 'false'
         elif 'deny' in action and preview == 'True':
             deny_preview_list.append(rule.value)
             current_rule_index = len(deny_preview_list)
@@ -61,13 +66,48 @@ def create_lists():
     #     allow_no_preview_list, key='number_of_ips')
 
     stop_here = ''
-    combine_rules(allow_no_preview_list,1)
+    combine_rules(allow_no_preview_list, 1)
 
 
-def combine_rules(input_list,number_of_ips_to_match):
-    json_list = json.dumps(input_list)
+def combine_rules(input_list, number_of_ips_to_match):
+    # json_list = json.dumps(input_list)
     # print (json_list)
-    
+    patch_allow_preview_list = []
+    discard_allow_preview_list = []
+    i = 0
+    while i < len(input_list):
+        discard = input_list[i]['discard']
+        processed = input_list[i]['processed']
+        number_of_ips_i = input_list[i]['number_of_ips']
+        rule_priority_i = input_list[i]['priority']
+
+        if processed == 'false':  # skip processed and discarded rules
+            # find match
+            j = i
+            while j < (len(input_list)-i):  # run on the rest of the list starting at position i
+                number_of_ips_j = input_list[j+1]['number_of_ips']
+                rule_priority_j = input_list[j+1]['priority']
+                if number_of_ips_j <= (5-number_of_ips_i):  # Found a match
+                    patch_allow_preview_list.append(
+                        [rule_priority_i, rule_priority_j])
+                    # add the higher rule number to the discard list
+                    if rule_priority_i > rule_priority_j:
+                        discard_allow_preview_list.append(rule_priority_i)
+                    else:
+                        discard_allow_preview_list.append(rule_priority_j)
+
+                    # update both rules as processed
+                    input_list[i]['processed'] = 'true'
+                    input_list[j+1]['processed'] = 'true'
+                    break
+                j = j+1
+
+        # if applicable, update discard value to true
+        # update processed value to true
+        input_list[i]['processed'] = 'true'
+
+        i = i+1
+    stop_here = ''
 
 
 create_lists()
