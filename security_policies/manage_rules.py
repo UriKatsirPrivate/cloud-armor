@@ -120,8 +120,8 @@ def patch_rules(list_rules_to_patch, project_name, policy_name):
         rule_1 = security_policies.get_one_rule(
             project_name, policy_name, rule[1])
 
-    security_policies.patch_one_rule_new(
-        'uri-test', 'armor-policy1', rule_0['priority'], '', rule_0, rule_1)
+        security_policies.patch_one_rule_new(
+            project_name, policy_name, rule_0['priority'], '', rule_0, rule_1)
 
     stop_here = ''
 
