@@ -24,7 +24,8 @@ def main():
     rules_to_discard = rules[1]
 
     # Patch rules
-    manage_rules.patch_rules(rules_to_patch, PROJECT_NAME, POLICY_NAME)
+    patch_rules_result = manage_rules.patch_rules(
+        rules_to_patch, PROJECT_NAME, POLICY_NAME)
 
     # Discard rules
     manage_rules.discard_rules(rules_to_discard, PROJECT_NAME, POLICY_NAME)

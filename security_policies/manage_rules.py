@@ -112,7 +112,7 @@ def combine_rules(input_list):
 
 
 def patch_rules(list_rules_to_patch, project_name, policy_name):
-
+    list_patch_results = []
     # get each rule's details
     for rule in list_rules_to_patch:
         rule_0 = security_policies.get_one_rule(
@@ -120,14 +120,17 @@ def patch_rules(list_rules_to_patch, project_name, policy_name):
         rule_1 = security_policies.get_one_rule(
             project_name, policy_name, rule[1])
 
-        security_policies.patch_one_rule_new(
-            project_name, policy_name, rule_0['priority'], '', rule_0, rule_1)
+        list_patch_results.append(security_policies.patch_one_rule_new(
+            project_name, policy_name, rule_0['priority'], '', rule_0, rule_1))
 
     stop_here = ''
+    return list_patch_results
 
 
 def discard_rules(list_rules_to_discard, project_name, policy_name):
-    dd = ''
-
+    list_discard_rules_result = []
     for rule in list_rules_to_discard:
-        security_policies.removeRule(project_name, policy_name, rule)
+        list_discard_rules_result.append(security_policies.removeRule(
+            project_name, policy_name, rule))
+
+    return list_discard_rules_result
