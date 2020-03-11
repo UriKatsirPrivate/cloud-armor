@@ -59,7 +59,7 @@ def patch_one_rule_new(project_name, policy_name, rule_priority, body, rule0, ru
         j = j+1
 
     # Concat descriptions
-    description = rule0['description'] + ',' + rule1['description']
+    description = rule0['description'] + '~' + rule1['description']
     try:
         patched_rule_result = security_policy_service.securityPolicies().patchRule(
             project=project_name, securityPolicy=policy_name, body={
@@ -117,6 +117,7 @@ def patch_one_rule(project_name, policy_name, rule_priority):
     except:
         print "Unexpected error:", sys.exc_info()[0]
     hello = ''
+
 
 def removeRule(project_name, policy_name, rule_priority):
     response = security_policy_service.securityPolicies().removeRule(
