@@ -3,7 +3,7 @@ import security_policies
 import manage_rules
 
 PROJECT_NAME = 'uri-test'
-POLICY_NAME = 'armor-policy2'
+POLICY_NAME = 'armor-policy1'
 
 
 def main():
