@@ -28,7 +28,9 @@ def main():
     rules_to_patch = rules[0]
     rules_to_discard = rules[1]
 
-    manage_rules.patch_rules(rules_to_patch, PROJECT_NAME, POLICY_NAME)
+    # manage_rules.patch_rules(rules_to_patch, PROJECT_NAME, POLICY_NAME)
+
+    manage_rules.discard_rules(rules_to_discard,PROJECT_NAME,POLICY_NAME)
 
     fff = ''
 

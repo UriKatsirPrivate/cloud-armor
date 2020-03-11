@@ -120,3 +120,9 @@ def patch_one_rule(project_name, policy_name, rule_priority):
     except:
         print "Unexpected error:", sys.exc_info()[0]
     hello = ''
+
+def removeRule(project_name, policy_name, rule_priority):
+    response = security_policy_service.securityPolicies().removeRule(
+        project=project_name, securityPolicy=policy_name, priority=rule_priority).execute()
+
+    return response
