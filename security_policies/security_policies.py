@@ -45,6 +45,22 @@ def get_one_rule(project_name, policy_name, rule_priority):
 def patch_one_rule_new(project_name, policy_name, rule_priority, body, rule0, rule1):
     # print body
     # str(rule0['match']['config']['srcIpRanges']).replace(']', ',', 1).replace('u', '')
+    d = str(rule0['match']['config']['srcIpRanges']).replace(
+        ']', '', 1).replace('u', '').replace('[', '', 1)
+
+    ff = []
+    i = 0
+    while i < len(rule0['match']['config']['srcIpRanges']):
+        ff.append(rule0['match']['config']['srcIpRanges'][i])
+
+        i = i+1
+
+    j = 0
+    while j < len(rule1['match']['config']['srcIpRanges']):
+        ff.append(rule1['match']['config']['srcIpRanges'][j])
+
+        j = j+1
+
     try:
         patched_rule = security_policy_service.securityPolicies().patchRule(
             project=project_name, securityPolicy=policy_name, body={
@@ -54,12 +70,10 @@ def patch_one_rule_new(project_name, policy_name, rule_priority, body, rule0, ru
                 'preview': False,
                 'match': {
                     'config': {
-                        'srcIpRanges': [
-                            '10.23.3.0/24',
-                            '10.25.36.0/24',
-                            str(rule0['match']['config']['srcIpRanges']).replace(
-                                ']', '', 1).replace('u', '').replace('[', '', 1).replace("'","")
-                        ]
+                        'srcIpRanges':
+                            ff
+
+
                     },
                     'versionedExpr': 'SRC_IPS_V1'
                 }
