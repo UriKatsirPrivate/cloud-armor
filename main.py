@@ -1,4 +1,4 @@
-import count_rules
+# import count_rules
 import security_policies
 import manage_rules
 
