@@ -6,7 +6,8 @@ PROJECT_NAME = 'uri-test'
 POLICY_NAME = 'armor-policy1'
 
 
-def main():
+# def combine_security_rules(): # use this definition when running locally
+def combine_security_rules(request): # use this definition when deploying to GCP
 
     # Get the policy we want to modify
     one_policy = security_policies.get_one_policy(
@@ -45,4 +46,4 @@ def main():
 
 # Main function calling
 if __name__ == "__main__":
-    main()
+    combine_security_rules()

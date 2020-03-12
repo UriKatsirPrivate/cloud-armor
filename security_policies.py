@@ -13,7 +13,7 @@ import googleapiclient.discovery
 #     scopes=['https://www.googleapis.com/auth/cloud-platform'])
 
 # credentials = flow.run_local_server()
-# # credentials = flow.run_console()
+# credentials = flow.run_console()
 
 
 #  Authenticate using Service Account
@@ -74,7 +74,8 @@ def patch_one_rule_new(project_name, policy_name, rule_priority, body, rule0, ru
 
     # Concat descriptions
     description = rule0['description'] + '~' + rule1['description']
-    description = (description[:60] + '..') if len(description) > 60 else description
+    description = (description[:60] +
+                   '..') if len(description) > 60 else description
     # desc_len = len(description)
     try:
         patched_rule_result = security_policy_service.securityPolicies().patchRule(
