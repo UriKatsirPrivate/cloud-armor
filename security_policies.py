@@ -3,12 +3,26 @@ from googleapiclient.discovery import build
 import json
 import sys
 
-flow = InstalledAppFlow.from_client_secrets_file(
-    'supporting_files/client_secret_960394617171.json',
-    scopes=['https://www.googleapis.com/auth/cloud-platform'])
+from google.oauth2 import service_account
+import googleapiclient.discovery
 
-credentials = flow.run_local_server()
-# credentials = flow.run_console()
+
+# Authenticate from local machine
+# flow = InstalledAppFlow.from_client_secrets_file(
+#     'security/client_secret_960394617171.json',
+#     scopes=['https://www.googleapis.com/auth/cloud-platform'])
+
+# credentials = flow.run_local_server()
+# # credentials = flow.run_console()
+
+
+#  Authenticate using Service Account
+SCOPES = ['https://www.googleapis.com/auth/cloud-platform']
+SERVICE_ACCOUNT_FILE = 'security/oauth2-service-account.json'
+
+credentials = service_account.Credentials.from_service_account_file(
+    SERVICE_ACCOUNT_FILE, scopes=SCOPES)
+
 
 security_policy_service = build('compute', 'v1', credentials=credentials)
 
@@ -60,6 +74,8 @@ def patch_one_rule_new(project_name, policy_name, rule_priority, body, rule0, ru
 
     # Concat descriptions
     description = rule0['description'] + '~' + rule1['description']
+    description = (description[:60] + '..') if len(description) > 60 else description
+    # desc_len = len(description)
     try:
         patched_rule_result = security_policy_service.securityPolicies().patchRule(
             project=project_name, securityPolicy=policy_name, body={
