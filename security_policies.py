@@ -77,9 +77,9 @@ def patch_one_rule_new(project_name, policy_name, rule_priority, body, rule0, ru
                 }
             }, priority=rule_priority).execute()
     except Exception as e:
-        print "Unexpected error:", e
+        print ("Unexpected error:", e)
     except:
-        print "Unexpected error:", sys.exc_info()[0]
+        print ("Unexpected error:", sys.exc_info()[0])
     hello = ''
 
     return patched_rule_result
@@ -109,13 +109,13 @@ def patch_one_rule(project_name, policy_name, rule_priority):
                                                                     }, priority=rule_priority).execute()
 
     except Exception as e:
-        print "Unexpected error:", e
+        print ("Unexpected error:", e)
     # except NameError as err:
     #     print "Unexpected error:", err
     # except TypeError as err1:
     #     print "Unexpected error:", err1
     except:
-        print "Unexpected error:", sys.exc_info()[0]
+        print ("Unexpected error:", sys.exc_info()[0])
     hello = ''
 
 
