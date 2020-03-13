@@ -1,10 +1,17 @@
 # import count_rules
+import os
 import security_policies
 import manage_rules
 
+# Local Testing
 PROJECT_NAME = 'uri-test'
 POLICY_NAME = 'armor-policy1'
+# ----------------------------
 
+# using Environment Variables
+# PROJECT_NAME = os.environ.get('project_name')
+# POLICY_NAME = os.environ.get('policy_name')
+# ----------------------------------------------
 
 # def combine_security_rules(): # use this definition when running locally
 def combine_security_rules(request): # use this definition when deploying to GCP
