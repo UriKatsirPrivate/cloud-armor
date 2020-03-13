@@ -4,17 +4,20 @@ import security_policies
 import manage_rules
 
 # Local Testing
-PROJECT_NAME = 'uri-test'
-POLICY_NAME = 'armor-policy1'
+# PROJECT_NAME = 'uri-test'
+# POLICY_NAME = 'armor-policy1'
 # ----------------------------
 
 # using Environment Variables
-# PROJECT_NAME = os.environ.get('project_name')
-# POLICY_NAME = os.environ.get('policy_name')
+PROJECT_NAME = os.environ.get('project_name')
+POLICY_NAME = os.environ.get('policy_name')
 # ----------------------------------------------
 
 # def combine_security_rules(): # use this definition when running locally
-def combine_security_rules(request): # use this definition when deploying to GCP
+
+
+# use this definition when deploying to GCP
+def combine_security_rules(request):
 
     # Get the policy we want to modify
     one_policy = security_policies.get_one_policy(
