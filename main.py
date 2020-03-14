@@ -18,9 +18,9 @@ POLICY_NAME = os.environ.get('policy_name')
 
 
 # use this definition when deploying to GCP
-def combine_security_rules():
+def combine_security_rules(request):
 
-    list_patched_and_discarded_rules =[]
+    list_patched_and_discarded_rules = []
 
     # Get the policy we want to modify
     one_policy = security_policies.get_one_policy(
