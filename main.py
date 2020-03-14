@@ -2,10 +2,11 @@
 import os
 import security_policies
 import manage_rules
+import json
 
 # Local Testing
 # PROJECT_NAME = 'uri-test'
-# POLICY_NAME = 'armor-policy1'
+# POLICY_NAME = 'armor-policy2'
 # ----------------------------
 
 # using Environment Variables
@@ -17,7 +18,9 @@ POLICY_NAME = os.environ.get('policy_name')
 
 
 # use this definition when deploying to GCP
-def combine_security_rules(request):
+def combine_security_rules():
+
+    list_patched_and_discarded_rules =[]
 
     # Get the policy we want to modify
     one_policy = security_policies.get_one_policy(
@@ -41,7 +44,10 @@ def combine_security_rules(request):
     # Discard rules
     manage_rules.discard_rules(rules_to_discard, PROJECT_NAME, POLICY_NAME)
 
-    fff = ''
+    # fff = ''
+    list_patched_and_discarded_rules.append(rules_to_patch)
+    list_patched_and_discarded_rules.append(rules_to_discard)
+    return json.dumps(list_patched_and_discarded_rules)
 
     # rules_work = security_policies.patch_one_rule(
     #     PROJECT_NAME, POLICY_NAME, 55)
