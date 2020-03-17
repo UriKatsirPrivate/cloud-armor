@@ -132,4 +132,4 @@ supporting_files/one_policy.json
 /supporting_files/
 *.zip
 security/oauth2-service-account.json
-security/*
+security/*.json
