@@ -4,6 +4,5 @@ steps:
       - functions
       - deploy
       - combine_security_rules
-      - --source=.
+      - --source=/cloud-armor
       - --trigger-http
-      - -- dir=cloud-armor
