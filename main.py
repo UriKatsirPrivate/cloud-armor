@@ -29,7 +29,7 @@ def combine_security_rules(request):
     # Get the list of rules that are 'Allow' and 'No Preview'
     allow_no_preview_list = manage_rules.create_lists(one_policy)
 
-    # Create a list od rules to combine and rules to discard
+    # Create a list of rules to combine and rules to discard
     rules = manage_rules.combine_rules(allow_no_preview_list)
 
     rules_to_patch = rules[0]
