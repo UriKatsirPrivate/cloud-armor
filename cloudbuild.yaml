@@ -4,5 +4,6 @@ steps:
       - functions
       - deploy
       - combine_security_rules
-      - --source=/cloud-armor
+      - --source=.
       - --trigger-http
+      - --runtime=python37
