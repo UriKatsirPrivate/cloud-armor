@@ -6,3 +6,4 @@ steps:
       - combine_security_rules
       - --source=.
       - --trigger-http
+      - -- dir=cloud-armor
