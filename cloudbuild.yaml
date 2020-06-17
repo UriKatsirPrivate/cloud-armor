@@ -4,5 +4,5 @@ steps:
       - functions
       - deploy
       - combine_security_rules
-      - --source=main.py
+      - --source=.
       - --trigger-http
